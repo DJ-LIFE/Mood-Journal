@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserLocation } from '../lib/userLocation';
 import { Calendar } from '../components/Calendar';
 import axios from 'axios';
+import { weatherEmojis } from '../lib/weatherEmoji';
 
 export const MoodSelection = () => {
   const navigate = useNavigate();
@@ -105,7 +106,7 @@ export const MoodSelection = () => {
   };
 
   return (
-    <section className="max-w-500 rounded-2xl p-4 bg-white shadow-2xl border-transparent flex flex-col md:flex-row items-center justify-center gap-4">
+    <section className="max-w-500 scroll-auto rounded-2xl p-4 m-4 bg-white shadow-2xl border-transparent flex flex-col md:flex-row items-center justify-center gap-4">
       <div>
         <div className="flex flex-col justify-center items-center p-2">
           <h1 className="text-2xl font-bold text-center mb-4 text-orange-500">
@@ -115,8 +116,9 @@ export const MoodSelection = () => {
           <div className='flex justify-between items-center w-full gap-4 px-6'>
             <div className="font-semibold text-nowrap">{todaysDate}</div>
             {weatherData && (
-              <div className="text-sm text-gray-500">
-                Weather: {(weatherData[0].main.temp - 273.15).toFixed(1)}°C
+              <div className="text-sm font-semibold">
+                <span>{weatherEmojis[weatherData[0].weather[0].main.toLowerCase()]}</span>
+                {(weatherData[0].main.temp - 273.15).toFixed(1)}°C
               </div>
             )}
           </div>
