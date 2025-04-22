@@ -5,6 +5,7 @@ import { getUserLocation } from '../lib/userLocation';
 import { Calendar } from '../components/Calendar';
 import axios from 'axios';
 import { weatherEmojis } from '../lib/weatherEmoji';
+import { CustomButton } from '../components/CustomButton';
 
 export const MoodSelection = () => {
   const navigate = useNavigate();
@@ -16,10 +17,11 @@ export const MoodSelection = () => {
     day: 'numeric',
   });
 
-  const [moodData, setMoodData] = useState<MoodData>({
+  const [moodData, setMoodData] = useState<MoodData & { weather?: string }>({
     title: '',
     emoji: '',
     date: todaysDate,
+    weather: '',
   });
   const [location, setLocation] = useState<{
     latitude: number;
@@ -65,6 +67,13 @@ export const MoodSelection = () => {
   }, []);
 
   useEffect(() => {
+    if (weatherData) {
+      const weatherDescription = `${weatherEmojis[weatherData[0].weather[0].main.toLowerCase()]} ${(weatherData[0].main.temp - 273.15).toFixed(1)}°C`;
+      setMoodData((prevState) => ({ ...prevState, weather: weatherDescription }));
+    }
+  }, [weatherData]);
+
+  useEffect(() => {
     const fetchSavedDates = () => {
       const savedMoods = JSON.parse(localStorage.getItem('moodData') || '[]');
       const dates = savedMoods.map((mood: MoodData) => mood.date);
@@ -84,15 +93,19 @@ export const MoodSelection = () => {
 
   const handleSave = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (moodData.title && moodData.emoji) {
-      const existingData = JSON.parse(localStorage.getItem('moodData') || '[]');
-      const updatedData = [...existingData, moodData];
-      localStorage.setItem('moodData', JSON.stringify(updatedData));
-      alert('Mood saved successfully!');
-    } else {
-      alert('Please select a mood and add a note.');
+    if (!moodData.emoji) {
+      alert('Please select a mood.');
+      return;
     }
-    setMoodData({ title: '', emoji: '', date: todaysDate });
+    if (!moodData.title.trim()) {
+      alert('Please add a note.');
+      return;
+    }
+    const existingData = JSON.parse(localStorage.getItem('moodData') || '[]');
+    const updatedData = [...existingData, moodData];
+    localStorage.setItem('moodData', JSON.stringify(updatedData));
+    alert('Mood saved successfully!');
+    setMoodData({ title: '', emoji: '', date: todaysDate, weather: moodData.weather });
   };
 
   const handleDateClick = (date: string) => {
@@ -129,14 +142,12 @@ export const MoodSelection = () => {
         >
           <div className="flex justify-between gap-2 my-2">
             {moodOptions.map((mood) => (
-              <button
+              <CustomButton
                 key={mood.moodTheme}
-                className="cursor-pointer hover:scale-110 transition-all duration-300"
                 onClick={() => handleOnClick(mood.moodIcon)}
-                type="button"
               >
                 <span className="h-10 w-10">{mood.moodIcon}</span>
-              </button>
+              </CustomButton>
             ))}
           </div>
           <textarea
@@ -148,14 +159,14 @@ export const MoodSelection = () => {
             placeholder="Add a note ..."
           />
 
-          <button
+          <CustomButton
             type="submit"
             className="mt-5 py-2 px-4 border rounded-lg shadow-2xl text-white bg-amber-700"
           >
             Save
-          </button>
+          </CustomButton>
         </form>
-        <button onClick={() => navigate('saved')}>Go to saved</button>
+        <div className='p-2 bg-amber-100 rounded-lg text-sm font-semibold px-4 cursor-pointer hover:scale-105 transition-all duration-200'>Click on Date to go check your Saved notes</div>
       </div>
       <div>
         <h1 className="text-2xl font-bold text-center mb-4 text-orange-500">
