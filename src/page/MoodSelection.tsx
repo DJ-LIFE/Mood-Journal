@@ -27,7 +27,7 @@ export const MoodSelection = () => {
     latitude: number;
     longitude: number;
   } | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [setError] = useState<string | null>(null);
   const [weatherData, setWeatherData] = useState<any>(null);
   const [savedDates, setSavedDates] = useState<string[]>([]);
 
