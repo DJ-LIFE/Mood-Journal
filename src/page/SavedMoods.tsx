@@ -23,8 +23,13 @@ export const SavedMoods = () => {
       {
         moodData?.map((mood, index) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4 w-64 flex justify-between items-center gap-4">
-                <p className="font-bold">{mood.title}</p>
-                <p className="text-2xl">{mood.emoji}</p>
+              <div className="flex flex-col items-center">
+                <span className="text-4xl">{mood.emoji}</span>
+                <p className="text-sm text-gray-500">{mood.date}</p>
+              </div>
+              <div className="flex-1 ml-4">
+                <h2 className="text-lg font-semibold">{mood.title}</h2>
+              </div>
             </div>
         ))
       }
