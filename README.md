@@ -52,3 +52,14 @@ export default tseslint.config({
   },
 })
 ```
+
+## Assignment: What We Have Done
+
+As part of this assignment, we have:
+
+1. Configured ESLint to enable type-aware lint rules for better TypeScript support.
+2. Added stricter and stylistic linting configurations for improved code quality.
+3. Integrated `eslint-plugin-react-x` and `eslint-plugin-react-dom` to enforce React-specific linting rules.
+4. Updated the ESLint configuration to include project-specific TypeScript settings.
+
+This ensures a robust development environment with enhanced linting capabilities tailored for React and TypeScript projects.

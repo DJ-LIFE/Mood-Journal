@@ -1,4 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+// Add this import for PDF generation
+import jsPDF from 'jspdf';
 
 export const SavedNotes = () => {
   const location = useLocation();
@@ -9,6 +11,37 @@ export const SavedNotes = () => {
   const moodsForDate = savedMoods.filter((mood: any) => mood.date === date);
 
   const navigate = useNavigate();
+
+  const exportToCSV = () => {
+    const headers = ['Title,Emoji,Weather,Date'];
+    const rows = moodsForDate.map((mood: any) =>
+      [mood.title, mood.emoji, mood.weather || '', mood.date].join(',')
+    );
+    const csvContent = [headers, ...rows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `moods_${date}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text(`Moods for ${date}`, 10, 10);
+    moodsForDate.forEach((mood: any, index: number) => {
+      doc.text(
+        `${index + 1}. Title: ${mood.title}, Emoji: ${mood.emoji}, Weather: ${
+          mood.weather || 'N/A'
+        }, Date: ${mood.date}`,
+        10,
+        20 + index * 10
+      );
+    });
+    doc.save(`moods_${date}.pdf`);
+  };
 
   return (
     <div className="shadow-2xl rounded-2xl p-4">
@@ -39,7 +72,26 @@ export const SavedNotes = () => {
       ) : (
         <p>No mood saved for this date.</p>
       )}
-      <button onClick={() => navigate(-1)} className='p-2 bg-amber-100 rounded-lg text-sm font-semibold px-4 cursor-pointer hover:scale-105 transition-all duration-200'>Go Back</button>
+      <div className="flex gap-4 mt-4">
+        <button
+          onClick={exportToCSV}
+          className="p-2 bg-blue-100 rounded-lg text-sm font-semibold px-4 cursor-pointer hover:scale-105 transition-all duration-200"
+        >
+          Export as CSV
+        </button>
+        <button
+          onClick={exportToPDF}
+          className="p-2 bg-green-100 rounded-lg text-sm font-semibold px-4 cursor-pointer hover:scale-105 transition-all duration-200"
+        >
+          Export as PDF
+        </button>
+      </div>
+      <button
+        onClick={() => navigate(-1)}
+        className="p-2 bg-amber-100 rounded-lg text-sm font-semibold px-4 cursor-pointer hover:scale-105 transition-all duration-200 mt-4"
+      >
+        Go Back
+      </button>
     </div>
   );
 };
