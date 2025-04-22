@@ -1,65 +1,98 @@
-# React + TypeScript + Vite
+# Interactive Mood Journal with Weather Integration
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a personal mood journal web application that integrates real-time weather data. It is developed as part of the **APIWIZ - Frontend Intern/Fresher Role Assignment**. The application focuses on building responsive, user-focused interfaces while utilizing public APIs and geolocation features.
 
-Currently, two official plugins are available:
+## Objective
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The goal of this project is to create a responsive, interactive web app that allows users to log their mood each day and visualize it alongside real-time weather data.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **User Interface**:
+   - Clean and responsive layout compatible with mobile and desktop screens.
+   - Daily mood selection system with at least 5 different mood options (represented by emojis or custom icons).
+   - Short text input field for daily notes.
+   - Prominent display of the current date.
+   - Real-time weather display for the user's location.
+   - Calendar view for past mood entries.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+2. **Core Features**:
+   - Mood selection with visual feedback.
+   - Auto-population of the current date.
+   - Geolocation API integration to fetch the user’s current location.
+   - Weather data fetched using a free API (e.g., OpenWeatherMap).
+   - Mood entries linked with weather data and stored together.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+3. **Visual Enhancements**:
+   - Custom or emoji mood icons.
+   - Visual representation of weather (e.g., sun icon for clear, cloud for overcast).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+4. **User Experience Features**:
+   - Form validation for mood selection and note input.
+   - Confirmation prompt/notification after saving an entry.
+   - Calendar view showing all previous entries with mood and weather snapshots.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+5. **Technical Features**:
+   - Built using React and TypeScript with Vite.
+   - Clean and modular code structure.
+   - Local storage for storing entries.
+   - Integration with a free weather API using asynchronous calls (axios).
 
-## Assignment: What We Have Done
+## What We Have Done
 
-As part of this assignment, we have:
+1. **Set Up the Project**:
+   - Initialized the project with Vite and configured it for React and TypeScript.
+   - Installed necessary dependencies for development and production.
 
-1. Configured ESLint to enable type-aware lint rules for better TypeScript support.
-2. Added stricter and stylistic linting configurations for improved code quality.
-3. Integrated `eslint-plugin-react-x` and `eslint-plugin-react-dom` to enforce React-specific linting rules.
-4. Updated the ESLint configuration to include project-specific TypeScript settings.
+2. **Implemented Functional Requirements**:
+   - Developed a responsive layout for mobile and desktop screens.
+   - Added a mood selection system with 5 custom emoji options.
+   - Integrated a text input field for daily notes.
+   - Displayed the current date prominently.
+   - Used the Geolocation API to fetch the user's location.
+   - Integrated OpenWeatherMap API to fetch real-time weather data.
+   - Linked mood entries with weather data and stored them in local storage.
 
-This ensures a robust development environment with enhanced linting capabilities tailored for React and TypeScript projects.
+3. **Enhanced Visuals**:
+   - Designed custom emoji icons for moods.
+   - Displayed weather icons dynamically based on weather conditions.
+
+4. **Improved User Experience**:
+   - Added form validation for mood selection and note input.
+   - Implemented a confirmation notification after saving entries.
+   - Created a calendar view to display past entries with mood and weather snapshots.
+
+## How to Run the Project
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Build the project for production:
+   ```bash
+   npm run build
+   ```
+
+4. Preview the production build:
+   ```bash
+   npm run preview
+   ```
+
+## Bonus Features (Implemented)
+- **Export Entries**: Enabled exporting journal entries as a CSV file.
+
+## Future Improvements
+
+- Add integration with a backend for persistent data storage.
+- Implement user authentication for personalized journal entries.
+- Optimize the application for performance and scalability.
+
+## Conclusion
+
+This project demonstrates a well-configured React + TypeScript setup with Vite, focusing on responsive design, API integration, and enhanced user experience. It serves as a strong foundation for building scalable and maintainable web applications.
